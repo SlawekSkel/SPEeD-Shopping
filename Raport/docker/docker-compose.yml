@@ -1,0 +1,28 @@
+version: '2'
+services:
+ sql-report:
+   image: mysql
+   environment:
+     MYSQL_ROOT_PASSWORD: root
+     MYSQL_DATABASE: ShoppingRaportDB
+   networks:
+     - infoshare_network
+   ports:
+     - 23306:3306
+ jboss-report:
+   build: ./jboss
+   ports:
+        - 28080:8080
+        - 29990:9990
+        - 25005:5005
+
+   volumes:
+#   gdzie jest war
+     - ../target/shopping.war:/opt/jboss/wildfly/standalone/deployments/shopping.war
+   networks:
+     - infoshare_network
+
+
+networks:
+ infoshare_network:
+   driver: bridge
